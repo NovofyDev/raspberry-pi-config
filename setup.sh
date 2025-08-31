@@ -38,9 +38,6 @@ if systemctl is-active --quiet ufw; then
 else
     echo "UFW is not active. Configuring rules..."
 
-    # Explicitly start the UFW service before adding rules to avoid errors.
-    sudo systemctl start ufw
-
     # Allow SSH connections on the default port
     sudo ufw allow ssh
 
