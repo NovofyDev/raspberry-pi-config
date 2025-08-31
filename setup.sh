@@ -31,22 +31,18 @@ echo "------------------------------------------"
 # --- SECTION 3: UFW CONFIGURATION ---
 echo "3/3: Configuring and starting UFW (Uncomplicated Firewall)..."
 
-# Use 'ufw status' with a precise check to reliably determine if UFW is active.
-if sudo ufw status | grep -q "Status: active"; then
-    echo "UFW is already active. Skipping configuration."
-else
-    echo "UFW is not active. Enabling..."
+# Enable the firewall first. The --force flag prevents the interactive prompt.
+# This command also starts the ufw service and makes it persistent across reboots.
+echo "Enabling the firewall. This may briefly disconnect your SSH session."
+sudo ufw --force enable
 
-    # Enable the firewall first. The --force flag prevents the interactive prompt.
-    echo "Enabling the firewall. This may briefly disconnect your SSH session."
-    sudo ufw --force enable
+# Limit SSH connections to prevent brute-force attacks.
+# This command is idempotent; running it multiple times will not cause an error.
+sudo ufw limit ssh/tcp
 
-    # Limit SSH connections to prevent brute-force attacks.
-    # This also implicitly allows SSH connections.
-    sudo ufw limit ssh/tcp
-
-fi
-
+echo "UFW configuration complete."
 echo "------------------------------------------"
+
+# --- END SET UP
 echo "Raspberry Pi setup complete!"
 echo "You may need to log out and log back in for some changes to take effect."
