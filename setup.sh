@@ -24,7 +24,7 @@ echo "------------------------------------------"
 # --- SECTION 2: PACKAGE INSTALLATION ---
 echo "2/4: Installing required packages (mc, vim, ufw)..."
 # Using a single command for efficiency
-sudo apt-get install -y mc vim ufw
+sudo apt-get install -y tree mc vim ufw
 echo "Required packages installed."
 echo "------------------------------------------"
 
