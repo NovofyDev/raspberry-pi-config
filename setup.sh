@@ -38,15 +38,15 @@ if systemctl is-active --quiet ufw; then
 else
     echo "UFW is not active. Configuring rules..."
 
+    # Enable the firewall. The --force flag prevents the interactive prompt.
+    echo "Enabling the firewall. This may briefly disconnect your SSH session."
+    sudo ufw --force enable
+
     # Limit SSH connections to prevent brute-force attacks.
     # UFW normally allows SSH but denies connections if an IP address
     # tries to initiate 6 or more connections within 30 seconds.
     # This also implicitly allows SSH connections.
     sudo ufw limit ssh/tcp
-
-    # Enable the firewall. The --force flag prevents the interactive prompt.
-    echo "Enabling the firewall. This may briefly disconnect your SSH session."
-    sudo ufw --force enable
 
 fi
 
