@@ -31,9 +31,8 @@ echo "------------------------------------------"
 # --- SECTION 3: UFW CONFIGURATION ---
 echo "3/3: Configuring and starting UFW (Uncomplicated Firewall)..."
 
-# Use systemctl to reliably check if UFW is active. This avoids issues with
-# parsing text output from 'ufw status'.
-if systemctl is-active --quiet ufw; then
+# Use 'ufw status' with a precise check to reliably determine if UFW is active.
+if sudo ufw status | grep -q "Status: active"; then
     echo "UFW is already active. Skipping configuration."
 else
     echo "UFW is not active. Enabling..."
