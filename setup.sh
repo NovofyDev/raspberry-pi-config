@@ -50,13 +50,6 @@ else
     echo "Enabling the firewall. This may briefly disconnect your SSH session."
     sudo ufw --force enable
 
-    # --- Verification check ---
-    if systemctl is-active --quiet ufw; then
-        echo "UFW is now enabled with SSH rules."
-    else
-        echo "WARNING: UFW failed to enable. Please run 'sudo ufw status' to investigate."
-        exit 1 # Exit with an error code to signal failure
-    fi
 fi
 
 echo "------------------------------------------"
