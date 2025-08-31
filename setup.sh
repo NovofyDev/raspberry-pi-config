@@ -56,6 +56,7 @@ if echo "$ufw_status" | grep -q "Status: active"; then
 else
     echo "UFW is inactive."
 fi
+echo "------------------------------------------"
 
 # --- END SET UP
 echo "Raspberry Pi setup complete!"
