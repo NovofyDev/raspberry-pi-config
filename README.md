@@ -20,7 +20,7 @@ To run the main setup script, execute the following command on your Raspberry Pi
 
 ```bash
 # Example command - you should replace the URL with your own repository's raw script link
-curl -sL [https://raw.githubusercontent.com/your-username/raspberry-pi-config/main/setup.sh](https://raw.githubusercontent.com/your-username/raspberry-pi-config/main/setup.sh) | bash
+curl -sL curl -sL https://github.com/NovofyDev/raspberry-pi-config/blob/main/setup.sh | bash
 ```
 
 For more detailed information, please refer to the `setup.sh` script and the other files within this repository.
