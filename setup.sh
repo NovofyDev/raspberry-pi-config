@@ -31,8 +31,11 @@ echo "------------------------------------------"
 # --- SECTION 3: UFW CONFIGURATION ---
 echo "3/3: Configuring and starting UFW (Uncomplicated Firewall)..."
 
-# Check if UFW is already enabled to prevent running redundant commands.
-if ! sudo ufw status | grep -q "active"; then
+# Use systemctl to reliably check if UFW is active. This avoids issues with
+# parsing text output from 'ufw status'.
+if systemctl is-active --quiet ufw; then
+    echo "UFW is already active. Skipping configuration."
+else
     echo "UFW is not active. Configuring rules..."
 
     # Allow SSH connections on the default port
@@ -43,11 +46,10 @@ if ! sudo ufw status | grep -q "active"; then
     # tries to initiate 6 or more connections within 30 seconds.
     sudo ufw limit ssh/tcp
 
-    # Enable the firewall. The user must confirm this action.
+    # Enable the firewall. The --force flag prevents the interactive prompt.
     echo "Enabling the firewall. This may briefly disconnect your SSH session."
-    echo "After enabling, you will need to reconnect."
     sudo ufw --force enable
-    
+
     # --- Verification check ---
     if sudo ufw status | grep -q "active"; then
         echo "UFW is now enabled with SSH rules."
@@ -55,8 +57,6 @@ if ! sudo ufw status | grep -q "active"; then
         echo "WARNING: UFW failed to enable. Please run 'sudo ufw status' to investigate."
         exit 1 # Exit with an error code to signal failure
     fi
-else
-    echo "UFW is already active. Skipping configuration."
 fi
 
 echo "------------------------------------------"
