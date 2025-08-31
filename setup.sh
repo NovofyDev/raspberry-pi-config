@@ -15,21 +15,21 @@ echo "Starting Raspberry Pi post-install setup..."
 echo "------------------------------------------"
 
 # --- SECTION 1: SYSTEM UPDATE AND UPGRADE ---
-echo "1/3: Updating and upgrading system packages..."
+echo "1/4: Updating and upgrading system packages..."
 sudo apt-get update -y
 sudo apt-get upgrade -y
 echo "System packages updated and upgraded."
 echo "------------------------------------------"
 
 # --- SECTION 2: PACKAGE INSTALLATION ---
-echo "2/3: Installing required packages (mc, vim, ufw)..."
+echo "2/4: Installing required packages (mc, vim, ufw)..."
 # Using a single command for efficiency
 sudo apt-get install -y mc vim ufw
 echo "Required packages installed."
 echo "------------------------------------------"
 
 # --- SECTION 3: UFW CONFIGURATION ---
-echo "3/3: Configuring and starting UFW (Uncomplicated Firewall)..."
+echo "3/4: Configuring and starting UFW (Uncomplicated Firewall)..."
 
 # Enable the firewall first. The --force flag prevents the interactive prompt.
 # This command also starts the ufw service and makes it persistent across reboots.
@@ -42,6 +42,20 @@ sudo ufw limit ssh/tcp
 
 echo "UFW configuration complete."
 echo "------------------------------------------"
+
+# --- SECTION 4: Confirm CONFIGURATIONs ---
+echo "4/4: Checking configurations..."
+# Check UFW status
+ufw_status=$(sudo ufw status)
+
+# Check if UFW is active
+if echo "$ufw_status" | grep -q "Status: active"; then
+    echo "UFW is active."
+    echo "Current UFW status details:"
+    echo "$ufw_status"
+else
+    echo "UFW is inactive."
+fi
 
 # --- END SET UP
 echo "Raspberry Pi setup complete!"
