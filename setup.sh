@@ -51,7 +51,7 @@ else
     sudo ufw --force enable
 
     # --- Verification check ---
-    if sudo ufw status | grep -q "active"; then
+    if systemctl is-active --quiet ufw; then
         echo "UFW is now enabled with SSH rules."
     else
         echo "WARNING: UFW failed to enable. Please run 'sudo ufw status' to investigate."
